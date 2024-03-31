@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="todolist.css">
+  <style>
+    body {
+    font-family: Arial, sans-serif,;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    height: 100vh;
+    background-color:rgba(11, 65, 102, 0.611);
+    border: 500px;
+  }
+  .task-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 600px;
+    justify-content: left;
+  }
+  .work {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(49, 46, 46, 0.1);
+    padding: 20px;
+    width: 600px;
+    justify-content:right;
+  }
+
+  
+h2, h3 {
+    color: #ff0000 ;
+    text-align: center;
+  }
+  
+  #task-form {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    background-color: #ff355e;
+    color: #fff;
+    padding:5px
+    border: none;
+    cursor: pointer;
+    border-radius: 5rem;
+    }
+  
+  button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  #task-list {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+  
+
+  
+  li {
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  </style>
+</head>
+<body>
+  
+  <div class="task-container">
+    <h2>To-Do List</h2>
+    <div id="task-form">
+      <label for="task-name">Task Name:</label>
+      <input type="textarea" id="task-name">
+
+      <label for="label">Label:</label>
+      <input type="text" id="label">
+
+      <label for="deadline">Deadline:</label>
+      <input type="date" id="deadline">
+
+      <label for="priority">Priority:</label>
+      <select id="priority">
+        <option value="high">Complete it ASAP</option>
+        <option value="low">Can be done later</option>
+      </select>
+      <button onclick="addTask()">Add Task</button>
+    </div>
+  </div>
+  <br>
+   .<div class="work">
+    <id="task-list">
+     <h3>Task List</h3>
+     <ul id="tasks">
+   </id> 
+   </div>
+  
+
+
+  <script>
+    let tasks = [];
+
+function addTask() {
+  const taskName = document.getElementById('task-name').value;
+  const deadline = document.getElementById('deadline').value;
+  const priority = document.getElementById('priority').value;
+  const labels = document.getElementById('label').value.split(',').map(label => label.trim());
+
+  const task = {
+    name: taskName,
+    deadline: deadline,
+    priority: priority,
+    labels: labels
+  };
+
+  tasks.push(task);
+  displayTasks();
+  clearForm();
+}
+
+function displayTasks() {
+  const tasksList = document.getElementById('tasks');
+  tasksList.innerHTML = '';
+
+  tasks.forEach((task, index) => {
+    const taskItem = document.createElement('li');
+    taskItem.innerHTML = `
+      <strong>Task:${task.name}</strong>
+      <br>
+      Labels: ${task.labels.join(', ')} <br>
+      Deadline: ${task.deadline} <br> 
+      Priority: ${task.priority} <br>
+      <br>
+      <button onclick="removeTask(${index})">Delete</button>
+    `;
+    tasksList.appendChild(taskItem);
+  });
+}
+
+function removeTask(index) {
+  tasks.splice(index, 1);
+  displayTasks();
+}
+
+function clearForm() {
+  document.getElementById('task-name').value = '';
+  document.getElementById('deadline').value = '';
+  document.getElementById('priority').value = 'high';
+  document.getElementById('label').value = '';
+}
+  </script>
+  
+</body>
+</html>
